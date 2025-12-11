@@ -1,3 +1,7 @@
 import opening
 
-print(opening('test1.docx'))
+def start():
+    totalmas = opening.open('test1.docx')
+
+if __name__=="__main__":
+    start()

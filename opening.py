@@ -1,8 +1,8 @@
-import docx
+from docx import Document
 
 def open(d):
-    f = docx.Document(d)
+    f = Document(d)
     t = []
-    for i in len(f.paradraphs):
-        t.upend(f.paragraphs[i].text)
+    for i in f.paragraphs:
+        t.append(i.text)
     return t
