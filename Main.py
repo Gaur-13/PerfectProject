@@ -36,14 +36,36 @@ def getns2(): #Get NumberS 2
     nvar = int(input("Write number of versions: "))
     nq = int(input("Write number of questions in every test: "))
     return [nvar, nq]
+    
+def addingAns(our_ans_list, right, nomervopr):
+    nomer = 0
+    nomer_right = random.randint(1, len(our_ans_list)+2)
+    for a in our_ans_list:
+        nomer++
+        if nomer == nomer_right:
+            opening.up(nomer + ") " + right)
+            nomer ++
+            opening.addright(nomervopr, nomer_right)
+        opening.up(nomer + ") " + a)
+        
 
 def preobr(masq):
     getnm = getns2()
     nvar = getnm[0]
     nq = getnm[1]
     nqs = int(len(masq)/3)
+    nomervopr = 0
     for i in range (nvar):
+        nomervopr++
         ourq = random.sample(range(1, nqs+1), nq)
+        for k in ours:
+            qes = masq[k*3]
+            ans = masq[k*3+1]
+            right = masq[k*3+2]
+            our_ans_list = random.sample(ans, len(ans))
+            opening.up(nomervopr + ". " + qes)
+            addingAns(our_ans_list, right, nomervopr)
+            
 
 def start():
     totalmas = opening.open('test1.docx')
