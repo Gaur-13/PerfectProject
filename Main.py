@@ -1,5 +1,6 @@
 import opening
 import random
+\\format disciption of some of variables: 1) promezh[]: list of uncorrect answer; 2) masq[]: question, [uncorrect answers,], correct answer; 3) nqs: number of questions we have; 4) nq: number of questions we need; 5) ourq: list of questions in right order6) our_ans_list: list of answers in right order; 6) 
 
 
 def getstartnumber(a):
@@ -58,7 +59,7 @@ def preobr(masq):
     for i in range (nvar):
         nomervopr++
         ourq = random.sample(range(1, nqs+1), nq)
-        for k in ours:
+        for k in ourq:
             qes = masq[k*3]
             ans = masq[k*3+1]
             right = masq[k*3+2]
