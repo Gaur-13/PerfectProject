@@ -1,6 +1,6 @@
 import opening
 import random
-\\format disciption of some of variables: 1) promezh[]: list of uncorrect answer; 2) masq[]: question, [uncorrect answers,], correct answer; 3) nqs: number of questions we have; 4) nq: number of questions we need; 5) ourq: list of questions in right order6) our_ans_list: list of answers in right order; 6) 
+#format disciption of some of variables: 1) promezh[]: list of uncorrect answer; 2) masq[]: question, [uncorrect answers,], correct answer; 3) nqs: number of questions we have; 4) nq: number of questions we need; 5) ourq: list of questions in right order6) our_ans_list: list of answers in right order; 6)
 
 
 def getstartnumber(a):
@@ -42,10 +42,10 @@ def addingAns(our_ans_list, right, nomervopr):
     nomer = 0
     nomer_right = random.randint(1, len(our_ans_list)+2)
     for a in our_ans_list:
-        nomer++
+        nomer += 1
         if nomer == nomer_right:
             opening.up(nomer + ") " + right)
-            nomer ++
+            nomer += 1
             opening.addright(nomervopr, nomer_right)
         opening.up(nomer + ") " + a)
         
@@ -57,7 +57,7 @@ def preobr(masq):
     nqs = int(len(masq)/3)
     nomervopr = 0
     for i in range (nvar):
-        nomervopr++
+        nomervopr += 1
         ourq = random.sample(range(1, nqs+1), nq)
         for k in ourq:
             qes = masq[k*3]

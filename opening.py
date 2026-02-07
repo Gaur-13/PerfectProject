@@ -11,7 +11,6 @@ doc = Document()
 rights = []
 
 def add(str):
-    global doc
     doc.add_paragrath(str)
 
 def writerights():
@@ -27,10 +26,8 @@ def writerights():
     doc.add_paragrath(answers)
 
 def addright(var, qes, ans):
-    global rights
-    rights.upend([var, qes+" - ", qns+" "])
+    rights.append([var, qes+" - ", ans+" "])
 
 def savedoc():
-    global doc
     writerights()
     doc.save("test.docx")
