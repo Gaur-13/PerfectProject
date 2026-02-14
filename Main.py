@@ -38,16 +38,19 @@ def getns2(): #Get NumberS 2
     nq = int(input("Write number of questions in every test: "))
     return [nvar, nq]
     
-def addingAns(our_ans_list, right, nomervopr):
+def addingAns(our_ans_list, right, nomervopr, varnow):
     nomer = 0
-    nomer_right = random.randint(1, len(our_ans_list)+2)
+    nomer_right = random.randint(1, len(our_ans_list)+1)
     for a in our_ans_list:
         nomer += 1
         if nomer == nomer_right:
-            opening.up(nomer + ") " + right)
+            opening.add(f"{nomer}) {right}")
             nomer += 1
-            opening.addright(nomervopr, nomer_right)
-        opening.up(nomer + ") " + a)
+            opening.addright(nomervopr, nomer_right, varnow)
+        opening.add(f"{nomer}) {a}")
+    if nomer_right == len(our_ans_list)+1:
+        opening.add(f"{nomer_right}) {right}")
+        opening.addright(nomervopr, nomer_right, varnow)
         
 
 def preobr(masq):
@@ -55,22 +58,30 @@ def preobr(masq):
     nvar = getnm[0]
     nq = getnm[1]
     nqs = int(len(masq)/3)
-    nomervopr = 0
+    varnow = 0;
     for i in range (nvar):
-        nomervopr += 1
-        ourq = random.sample(range(1, nqs+1), nq)
+        varnow += 1
+        nomervopr = 0
+        opening.add(f"Вариант {varnow}")
+        ourq = random.sample(range(0, nqs), nq)
         for k in ourq:
+            nomervopr += 1
+            print(k)   #delete later
             qes = masq[k*3]
             ans = masq[k*3+1]
             right = masq[k*3+2]
             our_ans_list = random.sample(ans, len(ans))
-            opening.up(nomervopr + ". " + qes)
-            addingAns(our_ans_list, right, nomervopr)
+            opening.add(f"{nomervopr}. {qes}")
+            addingAns(our_ans_list, right, nomervopr, varnow)
+    opening.savedoc()
+
+def getway():
+    return 'test1.docx'
             
 
 def start():
-    totalmas = opening.open('test1.docx')
-    qn = getns1();  # question numbers
+    totalmas = opening.open(getway())
+    qn = getns1()  # question numbers
     masq = []  # question we need
     isq = False
     promezh = []
