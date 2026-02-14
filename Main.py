@@ -1,5 +1,7 @@
 import opening
 import random
+from PyQt5.QtWidgets import QApplication, QFileDialog
+import sys
 #format disciption of some of variables: 1) promezh[]: list of uncorrect answer; 2) masq[]: question, [uncorrect answers,], correct answer; 3) nqs: number of questions we have; 4) nq: number of questions we need; 5) ourq: list of questions in right order6) our_ans_list: list of answers in right order; 6)
 
 
@@ -76,7 +78,18 @@ def preobr(masq):
     opening.savedoc()
 
 def getway():
-    return 'test1.docx'
+    app = QApplication(sys.argv)
+
+    file_path, _ = QFileDialog.getOpenFileName(
+        None,
+        "Выберите документ",
+        "",
+        "*.docx"
+    )
+
+    return file_path
+
+    app.exit()
             
 
 def start():

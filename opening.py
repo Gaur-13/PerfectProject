@@ -23,7 +23,7 @@ def writerights():
             varnow = list[0]
             answers += f"Вар {varnow}. "
         answers += f"{list[1]} - {list[2]}), "
-    doc.add_paragraph(answers)
+    doc.add_paragraph(answers[:len(answers)-2])
 
 def addright(qes, ans, var):
     rights.append([var, qes, ans])
