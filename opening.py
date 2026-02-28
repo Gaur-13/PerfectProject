@@ -1,4 +1,5 @@
 from docx import Document
+from docx.enum.text import WD_ALIGN_PARAGRAPH
 import os
 
 def open(d):
@@ -14,6 +15,10 @@ rights = []
 def add(str):
     doc.add_paragraph(str)
 
+def addcenter(str):
+    pr = doc.add_paragraph(str)
+    pr.paragraph_format.alignment = WD_ALIGN_PARAGRAPH.CENTER
+
 def writerights():
     print(rights)
     varnow = rights[0][0]
@@ -27,6 +32,9 @@ def writerights():
 
 def addright(qes, ans, var):
     rights.append([var, qes, ans])
+
+def new_page():
+    doc.add_page_break()
 
 def savedoc():
     writerights()
