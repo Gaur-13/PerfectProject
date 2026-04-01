@@ -29,23 +29,10 @@ def realright(a):
     else:
         return False
 
-def getns1(): # Get NumberS 1
-    nq = int(input("Write number of questions: "));  # number of questions
-    print("Write question numbers: ")
-    qn = []
-    for i in range(nq):
-        qn.append(int(input()))
-    return qn
 
-def get_heading():
-    head = input("Write test heading: ")
-    return head
+def sort(numbers_string):
+    return sorted([int(x.strip()) for x in numbers_string.split(',')])
 
-def getns2(): #Get NumberS 2
-    nvar = int(input("Write number of versions: "))
-    nq = int(input("Write number of questions in every test: "))
-    return [nvar, nq]
-    
 def addingAns(our_ans_list, right, nomervopr, varnow):
     nomer = 0
     nomer_right = random.randint(1, len(our_ans_list)+1)
@@ -61,13 +48,11 @@ def addingAns(our_ans_list, right, nomervopr, varnow):
         opening.addright(nomervopr, nomer_right, varnow)
         
 
-def preobr(masq):
+def preobr(masq, getnm, head):
     nqs = int(len(masq) / 3)
-    getnm = getns2()
     nvar = getnm[0]
     nq = getnm[1]
-    head = get_heading()
-    varnow = 0;
+    varnow = 0
     for i in range (nvar):
         varnow += 1
         nomervopr = 0
@@ -76,7 +61,6 @@ def preobr(masq):
         ourq = random.sample(range(0, nqs), nq)
         for k in ourq:
             nomervopr += 1
-            print(k)   #delete later
             qes = masq[k*3]
             ans = masq[k*3+1]
             right = masq[k*3+2]
@@ -101,8 +85,6 @@ def getting(totalmas):
     input_frame.pack(expand=True, fill="both")
 
     labels = ["Номера вопросов:", "Количество вариантов:", "Количество вопросов:", "Название теста:"]
-    left_entries = []
-    right_entries = []
 
     for i, label_text in enumerate(labels):
         label = tk.Label(
@@ -113,26 +95,39 @@ def getting(totalmas):
             anchor="e"
         )
         label.grid(row=i, column=0, padx=(0, 10), pady=10, sticky="e")
-
-        left_entry = tk.Entry(
-            input_frame,
-            font=main_font,
-            bg="white",
-            relief="solid",
-            bd=1
-        )
-        left_entry.grid(row=i, column=1, padx=(0, 20), pady=10, sticky="ew")
-        left_entries.append(left_entry)
-
-        right_entry = tk.Entry(
-            input_frame,
-            font=main_font,
-            bg="white",
-            relief="solid",
-            bd=1
-        )
-        right_entry.grid(row=i, column=2, padx=0, pady=10, sticky="ew")
-        right_entries.append(right_entry)
+    left_entry1 = tk.Entry(
+        input_frame,
+        font=main_font,
+        bg="white",
+        relief="solid",
+        bd=1
+    )
+    left_entry1.grid(row=0, column=1, padx=(0, 20), pady=10, sticky="ew")
+    left_entry1.focus_set()
+    left_entry2 = tk.Entry(
+        input_frame,
+        font=main_font,
+        bg="white",
+        relief="solid",
+        bd=1
+    )
+    left_entry2.grid(row=1, column=1, padx=(0, 20), pady=10, sticky="ew")
+    left_entry3 = tk.Entry(
+        input_frame,
+        font=main_font,
+        bg="white",
+        relief="solid",
+        bd=1
+    )
+    left_entry3.grid(row=2, column=1, padx=(0, 20), pady=10, sticky="ew")
+    left_entry4 = tk.Entry(
+        input_frame,
+        font=main_font,
+        bg="white",
+        relief="solid",
+        bd=1
+    )
+    left_entry4.grid(row=3, column=1, padx=(0, 20), pady=10, sticky="ew")
 
     input_frame.grid_columnconfigure(1, weight=1, minsize=150)
     input_frame.grid_columnconfigure(2, weight=1, minsize=150)
@@ -140,8 +135,7 @@ def getting(totalmas):
     button_frame = tk.Frame(main_frame, bg="#f0f0f0")
     button_frame.pack(fill="x", pady=(30, 0))
     def vihod():
-        root.destroy()
-        start(totalmas)
+        start(totalmas, sort(left_entry1.get()), [int(left_entry2.get()), int(left_entry3.get())], left_entry4.get(), root)
 
     submit_button = tk.Button(
         button_frame,
@@ -154,9 +148,22 @@ def getting(totalmas):
         relief="raised",
         bd=2,
         cursor="hand2",
-        command = lambda: vihod()
+        command = vihod
     )
     submit_button.pack(side="right")
+    foc_now = 1
+    def set_focus():
+        global foc_now
+        if foc_now==1:
+            left_entry2.focus_set()
+            foc_now = 2
+        if foc_now==2:
+            foc_now = 3
+            left_entry3.focus_set()
+        if foc_now==3:
+            foc_now = 4
+            left_entry4.focus_set()
+    root.bind("<Return>", set_focus)
 
     root.mainloop()
 
@@ -175,9 +182,9 @@ def getway():
     app.exit()
             
 
-def start(totalmas):
-    qn = getns1()  # question numbers
+def start(totalmas, qn, getnm, head, root):
     masq = []  # question we need
+    root.destroy()
     isq = False
     promezh = []
     right = ""
@@ -206,8 +213,7 @@ def start(totalmas):
     if isq:
         masq.append(promezh)
         masq.append(right)
-    print(masq)
-    preobr(masq)
+    preobr(masq, getnm, head)
 
 def pre_start():
     totalmas = opening.open(getway())
@@ -221,7 +227,7 @@ from tkinter import font, scrolledtext
 def razrab():
     root = tk.Tk()
     root.title("О разработчике")
-    root.geometry("600x400")
+    root.geometry("600x750")
 
     poem_text = "Годовой проект по информатике ученика Президентского физико-математического лицея №239 города Санкт-Петербурга Гаврилова Александра"
 
@@ -241,6 +247,15 @@ def razrab():
     text_widget.insert("1.0", poem_text)
     text_widget.config(state="disabled")
 
+    button2 = tk.Button(
+        root,
+        text="Назад",
+        bg="lightgreen",
+        height=2,
+        width=20,
+        command =lambda: root.destroy()+startmenu())
+    button2.pack(pady=10, expand=True)
+
     root.mainloop()
 
 def startmenu():
@@ -250,20 +265,20 @@ def startmenu():
 
     large_font = font.Font(size=16, weight="bold")
 
-    output_entry = tk.Entry(
+    output_label = tk.Label(
         root,
-        font=large_font,
+        text="Приветствуем вас в нашей программе!",
+        font=font.Font(family="Segoe Script", size=16, slant="italic"),
         justify="center",
-        bg="lightgray",
-        fg="black"
+        bg="white",
+        fg="red"
     )
-    output_entry.pack(
+    output_label.pack(
         pady=20,
         padx=20,
         fill="x",
         ipady=10
     )
-    output_entry.insert(0, "Приветствуем вас в нашей программе!")
 
     button_frame = tk.Frame(root)
     button_frame.pack(expand=True, fill="both", padx=20, pady=10)
@@ -272,7 +287,7 @@ def startmenu():
         button_frame,
         text="Сделать тест",
         font=large_font,
-        command = lambda: pre_start(),
+        command = lambda: root.destroy()+pre_start(),
         bg="lightblue",
         height=2,
         width=20
@@ -294,7 +309,7 @@ def startmenu():
         text="О разработчике",
         font=large_font,
         bg="lightcoral",
-        command = lambda: razrab(),
+        command = lambda: root.destroy()+razrab(),
         height=2,
         width=20
     )
