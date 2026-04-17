@@ -2,8 +2,10 @@ import opening
 import random
 from PyQt5.QtWidgets import QApplication, QFileDialog
 import sys
+import with_serv
 import tkinter as tk
 from tkinter import font
+from tkinter import font, scrolledtext
 #format disciption of some of variables: 1) promezh[]: list of uncorrect answer; 2) masq[]: question, [uncorrect answers,], correct answer; 3) nqs: number of questions we have; 4) nq: number of questions we need; 5) ourq: list of questions in right order6) our_ans_list: list of answers in right order; 6)
 
 
@@ -180,7 +182,11 @@ def getway():
     return file_path
 
     app.exit()
-            
+
+
+def get_from_serv(str):
+    return with_serv.getserv('10.2.1.213', "test1")
+
 
 def start(totalmas, qn, getnm, head, root):
     masq = []  # question we need
@@ -219,9 +225,64 @@ def pre_start():
     totalmas = opening.open(getway())
     getting(totalmas)
 
+def viborotk():
+    root = tk.Tk()
+    root.title("Выбор источника данных")
+    root.geometry("500x350")
+    root.configure(bg='#2c3e50')
 
-import tkinter as tk
-from tkinter import font, scrolledtext
+    root.update_idletasks()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    x = (screen_width - 500) // 2
+    y = (screen_height - 350) // 2
+    root.geometry(f"500x350+{x}+{y}")
+
+    button_style = {
+        'font': ('Arial', 12, 'bold'),
+        'fg': 'white',
+        'bg': '#3498db',
+        'activebackground': '#2980b9',
+        'activeforeground': 'white',
+        'relief': 'raised',
+        'bd': 2,
+        'width': 15,
+        'height': 2,
+        'cursor': 'hand2'
+    }
+
+    title_label = tk.Label(root, text="Выберите способ загрузки данных", font=('Arial', 16, 'bold'), fg='white', bg='#2c3e50')
+    title_label.pack(pady=(50, 30))
+
+    button_frame = tk.Frame(root, bg='#2c3e50')
+    button_frame.pack(expand=True, fill='both', padx=50)
+
+    btn_file = tk.Button(button_frame, text="📁 Свой файл", command=pre_start, **button_style)
+    btn_server = tk.Button(button_frame, text="🌐 С сервера", command=get_from_serv, **button_style)
+
+    button_frame.grid_columnconfigure(0, weight=1)
+    button_frame.grid_columnconfigure(1, weight=1)
+    button_frame.grid_rowconfigure(0, weight=1)
+
+    btn_file.grid(row=0, column=0, padx=10, pady=20, sticky='e')
+    btn_server.grid(row=0, column=1, padx=10, pady=20, sticky='w')
+
+    def on_enter(event, button):
+        button.config(bg='#2980b9')
+
+    def on_leave(event, button):
+        button.config(bg='#3498db')
+
+    btn_file.bind("<Enter>", lambda e: on_enter(e, btn_file))
+    btn_file.bind("<Leave>", lambda e: on_leave(e, btn_file))
+    btn_server.bind("<Enter>", lambda e: on_enter(e, btn_server))
+    btn_server.bind("<Leave>", lambda e: on_leave(e, btn_server))
+
+    footer_label = tk.Label(root, text="Выберите источник данных для продолжения", font=('Arial', 9), fg='#bdc3c7', bg='#2c3e50')
+    footer_label.pack(side='bottom', pady=20)
+
+    root.mainloop()
+
 
 
 def razrab():
@@ -287,7 +348,7 @@ def startmenu():
         button_frame,
         text="Сделать тест",
         font=large_font,
-        command = lambda: root.destroy()+pre_start(),
+        command = lambda: root.destroy()+viborotk(),
         bg="lightblue",
         height=2,
         width=20
