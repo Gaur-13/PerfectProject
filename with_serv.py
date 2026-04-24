@@ -21,7 +21,7 @@ def getserv(server_ip, data_string):
 
 
     client_socket.close()
-    return response_string
+    return response_string.split('¶')
 
 
 if __name__ == "__main__":
