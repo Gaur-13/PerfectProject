@@ -6,7 +6,7 @@ import with_serv
 import tkinter as tk
 from tkinter import font
 from tkinter import font, scrolledtext
-#format disciption of some of variables: 1) promezh[]: list of uncorrect answer; 2) masq[]: question, [uncorrect answers,], correct answer; 3) nqs: number of questions we have; 4) nq: number of questions we need; 5) ourq: list of questions in right order6) our_ans_list: list of answers in right order; 6)
+#format disciption of some of variables: 1) promezh[]: list of uncorrect answer; 2) masq[]: question, [uncorrect answers,], correct answer; 3) nqs: number of questions we have; 4) nq: number of questions we need; 5) ourq: list of questions in right order6) our_ans_list: list of answers in right order;
 
 
 def getstartnumber(a):
@@ -76,14 +76,21 @@ def getting(totalmas):
     root = tk.Tk()
     root.title("Окно с вводом данных")
     root.geometry("700x500")
-    root.configure(bg="#f0f0f0")
+    root.configure(bg='#2c3e50')
+
+    root.update_idletasks()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    x = (screen_width - 700) // 2
+    y = (screen_height -500) // 2
+    root.geometry(f"700x500+{x}+{y}")
 
     main_font = font.Font(size=12)
 
-    main_frame = tk.Frame(root, bg="#f0f0f0")
+    main_frame = tk.Frame(root, bg='#2c3e50')
     main_frame.pack(expand=True, fill="both", padx=30, pady=30)
 
-    input_frame = tk.Frame(main_frame, bg="#f0f0f0")
+    input_frame = tk.Frame(main_frame, bg='#2c3e50')
     input_frame.pack(expand=True, fill="both")
 
     labels = ["Номера вопросов:", "Количество вариантов:", "Количество вопросов:", "Название теста:"]
@@ -93,48 +100,53 @@ def getting(totalmas):
             input_frame,
             text=label_text,
             font=main_font,
-            bg="#f0f0f0",
-            anchor="e"
+            bg='#2c3e50',
+            anchor="e",
+            fg='white'
         )
         label.grid(row=i, column=0, padx=(0, 10), pady=10, sticky="e")
     left_entry1 = tk.Entry(
         input_frame,
         font=main_font,
-        bg="white",
+        bg='#34495e',
         relief="solid",
-        bd=1
+        bd=1,
+        fg='white'
     )
     left_entry1.grid(row=0, column=1, padx=(0, 20), pady=10, sticky="ew")
     left_entry1.focus_set()
     left_entry2 = tk.Entry(
         input_frame,
         font=main_font,
-        bg="white",
+        bg='#34495e',
         relief="solid",
-        bd=1
+        bd=1,
+        fg='white'
     )
     left_entry2.grid(row=1, column=1, padx=(0, 20), pady=10, sticky="ew")
     left_entry3 = tk.Entry(
         input_frame,
         font=main_font,
-        bg="white",
+        bg='#34495e',
         relief="solid",
-        bd=1
+        bd=1,
+        fg='white'
     )
     left_entry3.grid(row=2, column=1, padx=(0, 20), pady=10, sticky="ew")
     left_entry4 = tk.Entry(
         input_frame,
         font=main_font,
-        bg="white",
+        bg='#34495e',
         relief="solid",
-        bd=1
+        bd=1,
+        fg='white'
     )
     left_entry4.grid(row=3, column=1, padx=(0, 20), pady=10, sticky="ew")
 
     input_frame.grid_columnconfigure(1, weight=1, minsize=150)
     input_frame.grid_columnconfigure(2, weight=1, minsize=150)
 
-    button_frame = tk.Frame(main_frame, bg="#f0f0f0")
+    button_frame = tk.Frame(main_frame, bg='#2c3e50')
     button_frame.pack(fill="x", pady=(30, 0))
     def vihod():
         start(totalmas, sort(left_entry1.get()), [int(left_entry2.get()), int(left_entry3.get())], left_entry4.get(), root)
@@ -143,14 +155,16 @@ def getting(totalmas):
         button_frame,
         text="Далее",
         font=font.Font(size=14, weight="bold"),
-        bg="#4CAF50",
+        bg='#3498db',
         fg="white",
         padx=30,
         pady=10,
         relief="raised",
         bd=2,
         cursor="hand2",
-        command = vihod
+        command = vihod,
+        activebackground='#2980b9',
+        activeforeground='white'
     )
     submit_button.pack(side="right")
     foc_now = 1
@@ -183,9 +197,68 @@ def getway():
 
     app.exit()
 
+def get_from_serv():
+    root = tk.Tk()
+    root.title("Ввод IP")
+    root.configure(bg='#2c3e50')
 
-def get_from_serv(str):
-    return with_serv.getserv('10.2.1.213', "test1")
+    root.update_idletasks()
+    screen_w = root.winfo_screenwidth()
+    screen_h = root.winfo_screenheight()
+    x = (screen_w - 500) // 2
+    y = (screen_h - 200) // 2
+    root.geometry(f"{500}x{200}+{x}+{y}")
+
+    main_frame = tk.Frame(root, bg='#2c3e50')
+    main_frame.pack(expand=True, fill='both', padx=40, pady=30)
+
+   
+    input_row = tk.Frame(main_frame, bg='#2c3e50')
+    input_row.pack(pady=10)
+
+    label = tk.Label(
+        input_row,
+        text="IP-адрес:",
+        font=('Arial', 12, 'bold'),
+        fg='white',
+        bg='#2c3e50'
+    )
+    label.pack(side='left', padx=(0, 10))
+
+    ip_entry = tk.Entry(
+        input_row,
+        font=('Arial', 12),
+        bg='#34495e',
+        fg='white',
+        insertbackground='white',
+        relief='solid',
+        bd=1
+    )
+    ip_entry.pack(side='left')
+    ip_entry.focus_set()
+
+    def servpreobr():
+        ipa = ip_entry.get()
+        root.destroy()
+        getting(with_serv.getserv(ipa, "test1"))
+
+    btn = tk.Button(
+        main_frame,
+        text="Далее",
+        command=servpreobr,
+        font=('Arial', 12, 'bold'),
+        fg='white',
+        bg='#3498db',
+        activebackground='#2980b9',
+        activeforeground='white',
+        relief='raised',
+        bd=2,
+        cursor='hand2',
+        width=12
+    )
+    btn.pack(pady=20)
+
+    root.mainloop()
 
 
 def start(totalmas, qn, getnm, head, root):
@@ -284,13 +357,12 @@ def viborotk():
     root.mainloop()
 
 
-
-def razrab():
+def instr():
     root = tk.Tk()
     root.title("О разработчике")
     root.geometry("600x750")
 
-    poem_text = "Годовой проект по информатике ученика Президентского физико-математического лицея №239 города Санкт-Петербурга Гаврилова Александра"
+    text1 = "Чтобы сделать тест необходимо подготовить файл формата .docx, в котором будут вопросы, пронумерованные от 1 до некоторого числа. Варианты ответа должны быть указаны в формате буква+)+пробел+вариант ответа. У правильного ответа вместо скобки должна стоять дробь /. С сервера можно получить тест по математике."
 
     text_widget = scrolledtext.ScrolledText(
         root,
@@ -305,7 +377,43 @@ def razrab():
     )
     text_widget.pack(expand=True, fill="both", padx=20, pady=20)
 
-    text_widget.insert("1.0", poem_text)
+    text_widget.insert("1.0", text1)
+    text_widget.config(state="disabled")
+
+    button2 = tk.Button(
+        root,
+        text="Назад",
+        bg="lightgreen",
+        height=2,
+        width=20,
+        command =lambda: root.destroy()+startmenu())
+    button2.pack(pady=10, expand=True)
+
+    root.mainloop()
+
+
+
+def razrab():
+    root = tk.Tk()
+    root.title("О разработчике")
+    root.geometry("600x750")
+
+    text1 = "Годовой проект по информатике ученика Президентского физико-математического лицея №239 города Санкт-Петербурга Гаврилова Александра"
+
+    text_widget = scrolledtext.ScrolledText(
+        root,
+        font=font.Font(family="Arial", size=14),
+        wrap="word",
+        padx=20,
+        pady=20,
+        bg="#fef9e7",
+        fg="#34495e",
+        bd=2,
+        relief="solid"
+    )
+    text_widget.pack(expand=True, fill="both", padx=20, pady=20)
+
+    text_widget.insert("1.0", text1)
     text_widget.config(state="disabled")
 
     button2 = tk.Button(
@@ -322,8 +430,15 @@ def razrab():
 def startmenu():
     root = tk.Tk()
     root.title("Преобразователь тестов")
-    root.geometry("600x500")
+    root.geometry("700x500")
+    root.configure(bg='#2c3e50')
 
+    root.update_idletasks()
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+    x = (screen_width - 700) // 2
+    y = (screen_height - 500) // 2
+    root.geometry(f"700x500+{x}+{y}")
     large_font = font.Font(size=16, weight="bold")
 
     output_label = tk.Label(
@@ -331,8 +446,8 @@ def startmenu():
         text="Приветствуем вас в нашей программе!",
         font=font.Font(family="Segoe Script", size=16, slant="italic"),
         justify="center",
-        bg="white",
-        fg="red"
+        bg='#2c3e50',
+        fg="white"
     )
     output_label.pack(
         pady=20,
@@ -341,7 +456,7 @@ def startmenu():
         ipady=10
     )
 
-    button_frame = tk.Frame(root)
+    button_frame = tk.Frame(root? bg='#2c3e50')
     button_frame.pack(expand=True, fill="both", padx=20, pady=10)
 
     button1 = tk.Button(
@@ -349,9 +464,15 @@ def startmenu():
         text="Сделать тест",
         font=large_font,
         command = lambda: root.destroy()+viborotk(),
-        bg="lightblue",
+        bg='#3498db',
         height=2,
-        width=20
+        width=20,
+        fg='white',
+        activebackground='#2980b9',
+        activeforeground='white',
+        relief='raised',
+        bd=2,
+        cursor='hand2'
     )
     button1.pack(pady=10, expand=True)
 
@@ -359,9 +480,16 @@ def startmenu():
         button_frame,
         text="Посмотреть инструкцию",
         font=large_font,
-        bg="lightgreen",
+        bg='#3498db',
         height=2,
-        width=20
+        width=20,
+        fg='white',
+        command = lambda: root.destroy()+instr(),
+        activebackground='#2980b9',
+        activeforeground='white',
+        relief='raised',
+        bd=2,
+        cursor='hand2'
     )
     button2.pack(pady=10, expand=True)
 
@@ -369,10 +497,16 @@ def startmenu():
         button_frame,
         text="О разработчике",
         font=large_font,
-        bg="lightcoral",
+        bg='#3498db',
         command = lambda: root.destroy()+razrab(),
         height=2,
-        width=20
+        width=20,
+        fg='white',
+        activebackground='#2980b9',
+        activeforeground='white',
+        relief='raised',
+        bd=2,
+        cursor='hand2'
     )
     button3.pack(pady=10, expand=True)
 
