@@ -36,7 +36,8 @@ def addright(qes, ans, var):
 def new_page():
     doc.add_page_break()
 
-def savedoc():
+def savedoc(head):
     writerights()
-    doc.save("test.docx")
-    os.startfile('test.docx')
+    name = head+".docx"
+    doc.save(name)
+    os.startfile(name)

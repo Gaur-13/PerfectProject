@@ -70,7 +70,7 @@ def preobr(masq, getnm, head):
             opening.add(f"{nomervopr}. {qes}")
             addingAns(our_ans_list, right, nomervopr, varnow)
         opening.new_page()
-    opening.savedoc()
+    opening.savedoc(head)
 
 def getting(totalmas):
     root = tk.Tk()
@@ -456,7 +456,7 @@ def startmenu():
         ipady=10
     )
 
-    button_frame = tk.Frame(root? bg='#2c3e50')
+    button_frame = tk.Frame(root, bg='#2c3e50')
     button_frame.pack(expand=True, fill="both", padx=20, pady=10)
 
     button1 = tk.Button(
